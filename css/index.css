@@ -1,4 +1,51 @@
+@font-face {
+    font-family: "LeeSeoyun";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
+    font-family: "LeeSeoyun";
+}
+.container {
+    margin: 0 auto;
+    text-align: center;
+}
+h1 {
+    margin-top: 100px;
+}
+a {
+    text-decoration: none;
+}
+.sns {
+    margin-top: 10px;
+}
+.sns a {
+    font-size: 12px;
+    color: black;
+    font-weight: normal;
+}
+#map {
+    margin: 0 auto;
+    width: fit-content;
+    position: relative;
+}
+#map img {
+    width: 500px;
+}
+.coordsDisplay {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+#꿀떡이,
+#찰떡이,
+#콩떡이 {
+    display: none;
 }
