@@ -14,6 +14,8 @@
                 margin-top: 100px;
             }
             #map {
+                margin: 0 auto;
+                width: fit-content;
                 position: relative;
             }
             #map img {
@@ -70,22 +72,27 @@
                     var areas = document.querySelectorAll(
                         "map[name='exampleMap'] area"
                     );
+                    var left = 0;
+                    var top = 0;
+                    var circleRadius = "20";
 
                     areas.forEach(function (area) {
-                        var coords = area.getAttribute("coords").split(",");
                         var coordsDisplay = document.createElement("div");
                         coordsDisplay.classList.add("coordsDisplay");
-
-                        var left = coords[0];
-                        var top = coords[1];
-
-                        coordsDisplay.style.left = left + "px";
-                        coordsDisplay.style.top = top + "px";
 
                         if (area.alt == "Daegu") {
                             coordsDisplay.id = "kong";
                             coordsDisplay.style.backgroundImage =
                                 "url(./assets/콩.jpg)";
+
+                            left = 350;
+                            top = 400;
+
+                            coordsDisplay.style.left = left + "px";
+                            coordsDisplay.style.top = top + "px";
+                            coordsDisplay.style.width = circleRadius;
+                            area.coords = left + "," + top + "," + circleRadius;
+
                             var 콩떡이 = document.getElementById("콩떡이");
                             coordsDisplay.addEventListener(
                                 "mouseover",
@@ -103,6 +110,15 @@
                             coordsDisplay.id = "chal";
                             coordsDisplay.style.backgroundImage =
                                 "url(./assets/찰.jpg)";
+
+                            left = 435;
+                            top = 250;
+
+                            coordsDisplay.style.left = left + "px";
+                            coordsDisplay.style.top = top + "px";
+                            coordsDisplay.style.width = circleRadius;
+                            area.coords = left + "," + top + "," + circleRadius;
+
                             var 찰떡이 = document.getElementById("찰떡이");
                             coordsDisplay.addEventListener(
                                 "mouseover",
@@ -120,6 +136,15 @@
                             coordsDisplay.id = "ggul";
                             coordsDisplay.style.backgroundImage =
                                 "url(./assets/꿀.jpg)";
+
+                            left = 180;
+                            top = 110;
+
+                            coordsDisplay.style.left = left + "px";
+                            coordsDisplay.style.top = top + "px";
+                            coordsDisplay.style.width = circleRadius;
+                            area.coords = left + "," + top + "," + circleRadius;
+
                             var 꿀떡이 = document.getElementById("꿀떡이");
                             coordsDisplay.addEventListener(
                                 "mouseover",
