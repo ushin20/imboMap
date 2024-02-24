@@ -23,87 +23,78 @@
                 <img id="map-image" src="./assets/korea.jpg" alt="Korea" usemap="#exampleMap" />
             </div>
 
+            <!-- Explaination -->
             <div id="콩떡이">콩떡이</div>
             <div id="찰떡이">찰떡이</div>
             <div id="꿀떡이">꿀떡이</div>
 
             <map name="exampleMap">
-                <area shape="circle" coords="745, 395, 20" href="./pages/kong.html" alt="Daegu" />
-                <area shape="circle" coords="825, 250, 20" href="./pages/chal.html" alt="Ulsan" />
-                <area shape="circle" coords="570, 110, 20" href="./pages/ggul.html" alt="Yangju" />
+                <area shape="circle" coords="745, 395, 20" href="./pages/album.html?data=콩떡이&num=9" alt="Daegu" />
+                <area shape="circle" coords="825, 250, 20" href="./pages/album.html?data=찰떡이&num=11" alt="Ulsan" />
+                <area shape="circle" coords="570, 110, 20" href="./pages/album.html?data=꿀떡이&num=8" alt="Yangju" />
             </map>
 
             <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    var map = document.getElementById('map');
-                    var mapImage = document.getElementById('map-image');
-                    var areas = document.querySelectorAll("map[name='exampleMap'] area");
-                    var circleRadius = '20';
+                window.addEventListener('load', function () {
+                    const mapImage = document.getElementById('map-image');
+                    const areas = document.querySelectorAll("map[name='exampleMap'] area");
+                    const circleRadius = '20px';
 
                     areas.forEach(function (area) {
-                        var coordsDisplay = document.createElement('div');
+                        const coordsDisplay = document.createElement('div');
                         coordsDisplay.classList.add('coordsDisplay');
+                        const targetElementIdsMap = new Map([
+                            ['Daegu', '콩떡이'],
+                            ['Ulsan', '찰떡이'],
+                            ['Yangju', '꿀떡이'],
+                        ]);
+                        const targetElementId = targetElementIdsMap.get(area.alt) || '';
+                        const targetElement = document.getElementById(targetElementId);
 
-                        if (area.alt == 'Daegu') {
-                            coordsDisplay.id = 'kong';
-                            coordsDisplay.style.backgroundImage = 'url(./assets/콩.jpg)';
-                                 
-                            var coords_left = mapImage.width * 0.7 + map.style.marginLeft;
-                            var coords_top = mapImage.height * -0.44;
+                        coordsDisplay.style.backgroundImage = `url(./assets/${targetElementId}/1.jpg)`;
+                        coordsDisplay.style.width = circleRadius;
+                        coordsDisplay.style.height = circleRadius;
 
-                            coordsDisplay.style.left = coords_left + 'px';
-                            coordsDisplay.style.top = coords_top + 'px';
-                            coordsDisplay.style.width = circleRadius;
+                        coordsDisplay.addEventListener('mouseover', function () {
+                            targetElement.style.display = 'block';
+                        });
 
-                            var 콩떡이 = document.getElementById('콩떡이');
-                            coordsDisplay.addEventListener('mouseover', function () {
-                                콩떡이.style.display = 'block';
-                            });
-                            coordsDisplay.addEventListener('mouseout', function () {
-                                콩떡이.style.display = 'none';
-                            });
-                        } else if (area.alt == 'Ulsan') {
-                            coordsDisplay.id = 'chal';
-                            coordsDisplay.style.backgroundImage = 'url(./assets/찰.jpg)';
-
-                            var coords_left = mapImage.width * 0.87 + map.style.marginLeft;
-                            var coords_top = mapImage.height * -0.65;
-
-                            coordsDisplay.style.left = coords_left + 'px';
-                            coordsDisplay.style.top = coords_top + 'px';
-                            coordsDisplay.style.width = circleRadius;
-
-                            var 찰떡이 = document.getElementById('찰떡이');
-                            coordsDisplay.addEventListener('mouseover', function () {
-                                찰떡이.style.display = 'block';
-                            });
-                            coordsDisplay.addEventListener('mouseout', function () {
-                                찰떡이.style.display = 'none';
-                            });
-                        } else if (area.alt == 'Yangju') {
-                            coordsDisplay.id = 'ggul';
-                            coordsDisplay.style.backgroundImage = 'url(./assets/꿀.jpg)';
-
-                            var coords_left = mapImage.width * 0.36 + map.style.marginLeft;
-                            var coords_top = mapImage.height * -0.85;
-
-                            coordsDisplay.style.left = coords_left + 'px';
-                            coordsDisplay.style.top = coords_top + 'px';
-                            coordsDisplay.style.width = circleRadius;
-
-                            var 꿀떡이 = document.getElementById('꿀떡이');
-                            coordsDisplay.addEventListener('mouseover', function () {
-                                꿀떡이.style.display = 'block';
-                            });
-                            coordsDisplay.addEventListener('mouseout', function () {
-                                꿀떡이.style.display = 'none';
-                            });
-                        }
+                        coordsDisplay.addEventListener('mouseout', function () {
+                            targetElement.style.display = 'none';
+                        });
 
                         coordsDisplay.addEventListener('click', function () {
                             window.location.href = area.href;
+                            var 콩떡이 = document.getElementById('콩떡이');
+                            var 찰떡이 = document.getElementById('찰떡이');
+                            var 꿀떡이 = document.getElementById('꿀떡이');
+                            콩떡이.style.display = 'none';
+                            찰떡이.style.display = 'none';
+                            꿀떡이.style.display = 'none';
                         });
+
+                        function updateCoords() {
+                            const coords_left =
+                                {
+                                    Daegu: 0.7,
+                                    Ulsan: 0.87,
+                                    Yangju: 0.36,
+                                }[area.alt] * mapImage.width;
+
+                            const coords_top =
+                                {
+                                    Daegu: -0.44,
+                                    Ulsan: -0.67,
+                                    Yangju: -0.9,
+                                }[area.alt] * mapImage.height;
+
+                            coordsDisplay.style.left = coords_left + 'px';
+                            coordsDisplay.style.top = coords_top + 'px';
+                        }
+
+                        updateCoords();
                         document.querySelector('#map').appendChild(coordsDisplay);
+                        mapImage.addEventListener('load', updateCoords);
                     });
                 });
             </script>

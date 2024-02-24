@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title></title>
+        <link rel="stylesheet" href="../css/album.css" />
+    </head>
+    <body>
+        <h1 id="name"></h1>
+        <div class="album">
+            <div class="grid-container" id="grid-container">
+                <!-- add image here -->
+            </div>
+        </div>
+
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const data = urlParams.get('data');
+            const num = urlParams.get('num');
+            console.log(num);
+            // Page title
+            document.title = data;
+            const dataDisplay = document.getElementById('name');
+            dataDisplay.innerText = data;
+            // Add Image
+            const grid = document.getElementById('grid-container');
+            const numberOfImages = num;
+            for (let i = 1; i <= numberOfImages; i++) {
+                const imgContainer = document.createElement('div');
+                imgContainer.classList.add('img-container');
+                const img = document.createElement('img');
+                let src = `../assets/${data}/${i}.jpg`;
+                let alt = `${data}/${i}.jpg`;
+                let imgExtension = 'jpg';
+                let xhr = new XMLHttpRequest();
+                xhr.open('HEAD', src, false);
+                xhr.send();
+                if (xhr.status === 404) {
+                    src = `../assets/${data}/${i}.jpeg`;
+                    alt = `${data}/${i}.jpeg`;
+                    imgExtension = 'jpeg';
+                }
+
+                img.src = src;
+                img.alt = alt;
+                imgContainer.appendChild(img);
+                grid.appendChild(imgContainer);
+            }
+        </script>
+    </body>
+</html>
